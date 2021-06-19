@@ -4,7 +4,27 @@
     padding: 30px;
     max-width:450px;
     padding-left: 45px;
-    background-color: whitesmoke;
+    background-color: #00FF84;
+}
+.dateToday{
+
+padding:18px;
+    display: flex;
+    justify-content:center;
+    border:0.5px solid #0f0f0f;
+    width:52px !important;
+    margin:1px;
+    border-radius: 3px;
+    position: relative;
+    color: #0f0f0f;
+    font-size:17px;
+    font-weight: 500;
+    background-color: #00FF84;
+    min-width: 52px !important;
+    min-height: 60px;
+}
+.eventDot{
+    font-size:8px;
 }
 .date{
     padding:18px;
@@ -15,23 +35,74 @@
     margin:1px;
     border-radius: 0px;
     position: relative;
-    font-size:17px
+    color: #00FF84;
+    font-size:17px;
+    font-weight: 500;
+    background-color: #0f0f0f;
+    min-width: 52px !important;
+    min-height: 60px;
+
 }
 .dateFromPrevMonth{
     padding:18px;
     display: flex;
     justify-content:center;
-    border:1px solid gray;
-    width: 52px !important;
+    border:1px solid lightgray;
+    min-width: 52px !important;
     margin:1px;
     border-radius: 0px;
-    color:gray;
+    color:rgb(58, 51, 51);
+    background-color:lightgray;
+    font-weight: 500;
+    min-width: 52px !important;
+}
+.dateFromNextMonth{
+    padding:18px;
+    display: flex;
+    justify-content:center;
+    border:1px solid lightgray;
+    min-width: 52px !important;
+    margin:1px;
+    border-radius: 0px;
+    color:black;
+    background-color:lightgray;
+    font-weight: 500;
 }
 .events{
    position: absolute !important;
    margin-top: 15px;
+   
 }
 .dateP{
     position: absolute !important;
     top: 0;right: 10
+}
+.addDot{
+    border:1px solid black !important;
+    border-radius:10px;
+    margin-right: 5px;
+}
+.yearMonth{
+    font-size:30px;
+}
+.calendarText{
+    font-size:35px;
+    margin-bottom: 25px;
+}
+.monthYearRow{
+    background-color:#0f0f0f;
+    color:#00FF84;
+    border-radius: 10px 10px 5px 5px;
+    padding-top: 10px;
+}
+.arrow{
+    font-size:30px;
+    margin-top: 10px;
+}
+.minus{
+    font-size:30px;
+    background-color:#0f0f0f;
+    color:#00FF84;
+    border-radius:50px;
+    
 }

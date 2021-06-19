@@ -2,8 +2,16 @@ import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import "./CalendarComponent.css";
 import { Container, Row, Col } from "react-bootstrap";
+import {ImArrowRight} from "react-icons/im"
+import {ImArrowLeft} from "react-icons/im"
 class CalendarComponent extends Component {
   state = {
+    greenEvents: [],
+    redEvents: [],
+    orangeEvents: [],
+    isDateSelected: false,
+    dateSelected: {},
+    today: new Date(),
     currentYear: 0,
     currentMonth: 0,
     allDaysInThePrevMonth: [],
@@ -27,6 +35,10 @@ class CalendarComponent extends Component {
       "November",
       "December",
     ],
+  };
+  selectDate = async (date) => {
+    this.setState({ isDateSelected: true });
+    this.setState({ dateSelected: date });
   };
   updateCurrentMonth = async (index) => {
     this.setState({ currentMonth: this.state.currentMonth + index }, () => {});
@@ -117,6 +129,45 @@ class CalendarComponent extends Component {
         (this.state.allDaysInTheMonth.length + this.state.startArrayLenght),
     });
   };
+  reduceOrangeEvents = async () => {
+    const orangeEventsNew = this.state.orangeEvents;
+    
+    if(orangeEventsNew.length === 3){
+      window.alert("Max 3 per type")
+    }else{
+      orangeEventsNew.slice(0,orangeEventsNew.length());
+      this.setState({ orangeEvents: orangeEventsNew });
+    }
+   
+  };
+  saveInRedEvents = async () => {
+    const redEventsNew = this.state.redEvents;
+    if(redEventsNew.length === 3){
+      window.alert("Max 3 per type")
+    }else{
+    redEventsNew.push(new Date(this.state.dateSelected).getTime());
+    this.setState({ redEvents: redEventsNew });
+    }
+  };
+  saveInOrangeEvents = async () => {
+    const orangeEventsNew = this.state.orangeEvents;
+    if(orangeEventsNew.length === 3){
+      window.alert("Max 3 per type")
+    }else{
+      orangeEventsNew.push(new Date(this.state.dateSelected).getTime());
+      this.setState({ orangeEvents: orangeEventsNew });
+    }
+   
+  };
+  saveInGreenEvents = async () => {
+    const greenEventsNew = this.state.greenEvents;
+    if(greenEventsNew.length === 3){
+      window.alert("Max 3 per type")
+    }else{
+    greenEventsNew.push(new Date(this.state.dateSelected).getTime());
+    this.setState({ greenEvents: greenEventsNew })
+    };
+  };
   componentDidMount = async () => {
     //Getting the current year and month
     var today = new Date();
@@ -196,7 +247,7 @@ class CalendarComponent extends Component {
         (this.state.allDaysInTheMonth.length + this.state.startArrayLenght),
     });
     this.setState({ readyToRender: true });
-  }; 
+  };
   getDaysInMonth = async (month, year) => {
     // get the first day of the month
     var date = new Date(year, month, 1);
@@ -214,9 +265,28 @@ class CalendarComponent extends Component {
     return (
       <>
         <Container className="calendarContainer mt-2">
+          <h5 className="calendarText d-flex justify-content-center">
+            Calendar
+          </h5>
           <Row className="d-flex justify-content-center">
-            {this.state.readyToRender ? (
-              <p className="d-flex justify-content-center">
+           
+          </Row>
+          <Row className = "monthYearRow">
+            <Col
+              sm={2}
+              className="d-flex justify-content-center"
+              onClick={() => this.changeCurrentMonth(1)}
+            >
+              {" "}
+              <ImArrowLeft className ="arrow"/>
+            </Col>{" "}
+            <Col
+              sm={8}
+              className="d-flex justify-content-center"
+            >
+              {" "}
+              {this.state.readyToRender ? (
+              <p className="yearMonth d-flex justify-content-center">
                 {this.state.currentYear}{" "}
                 {
                   this.state.monthNames[
@@ -227,23 +297,14 @@ class CalendarComponent extends Component {
             ) : (
               1
             )}
-          </Row>
-          <Row>
+            </Col>
             <Col
-              sm={6}
-              className="d-flex justify-content-center"
-              onClick={() => this.changeCurrentMonth(1)}
-            >
-              {" "}
-              Prev
-            </Col>{" "}
-            <Col
-              sm={6}
+              sm={2}
               className="d-flex justify-content-center"
               onClick={() => this.changeCurrentMonth(0)}
             >
               {" "}
-              Next
+              <ImArrowRight className ="arrow"/>
             </Col>
           </Row>
           <Row>
@@ -264,22 +325,56 @@ class CalendarComponent extends Component {
                 ))}
                 {this.state.allDaysInTheMonth.map((day) => (
                   <>
-                    <Col className="date">
+                    <Col
+                      className={
+                        new Date(day.day).getDate() ===
+                          this.state.today.getDate() && new Date(day.day).getMonth() ===
+                          this.state.today.getMonth() && new Date(day.day).getYear() ===
+                          this.state.today.getYear()
+                          
+                   
+                          ? "dateToday"
+                          : "date"
+                      }
+                      onClick={() => this.selectDate(day.day)}
+                    >
                       <p className="dateP"> {new Date(day.day).getDate()} </p>
-                      <table>
+                      <table className = "mt-1">
                         <tr></tr>
                         <tr className="evenets">
-                          <td>o</td>
-                          <td>o</td>
-                          <td>o</td>
-                          <td>o</td>
+                          {this.state.redEvents
+                            .filter(
+                              (event) =>
+                                new Date(event).getTime() ===
+                                new Date(day.day).getTime()
+                            )
+                            .map((event) => (
+                              <td className = "eventDot">🔴</td>
+                            ))}
                         </tr>
                         <tr className="evenets">
-                          <td>o</td>
-                          <td>o</td>
-                          <td>o</td>
-                          <td>o</td>
+                          {this.state.orangeEvents
+                            .filter(
+                              (event) =>
+                                new Date(event).getTime() ===
+                                new Date(day.day).getTime()
+                            )
+                            .map((event) => (
+                              <td className = "eventDot">🟠</td>
+                            ))}
                         </tr>
+                        <tr className="evenets">
+                          {this.state.greenEvents
+                            .filter(
+                              (event) =>
+                                new Date(event).getTime() ===
+                                new Date(day.day).getTime()
+                            )
+                            .map((event) => (
+                              <td className = "eventDot">🟢</td>
+                            ))}
+                        </tr>
+                        <tr className="evenets"></tr>
                       </table>
                     </Col>
                   </>
@@ -287,7 +382,7 @@ class CalendarComponent extends Component {
                 {this.state.allDaysInTheMonth
                   .slice(0, this.state.endArrayLenght)
                   .map((day) => (
-                    <Col className="dateFromPrevMonth">
+                    <Col className="dateFromNextMonth">
                       {new Date(day.day).getDate()}
                     </Col>
                   ))}
@@ -296,6 +391,27 @@ class CalendarComponent extends Component {
               <p> loading</p>
             )}
           </Row>
+          {this.state.isDateSelected ? (
+            <>
+              {" "}
+              <Row className="mt-4">
+                <Col
+                  className="addDot d-flex justify-content-center"
+                  onClick={() => this.saveInRedEvents()}
+                >
+                  Red Dot 
+                </Col>
+                <Col className="addDot d-flex justify-content-center" onClick={() => this.saveInOrangeEvents()}>
+                  Orange Dot
+                </Col>
+                <Col className="addDot d-flex justify-content-center"onClick={() => this.saveInGreenEvents()}>
+                  Green Dot
+                </Col>
+              </Row>
+            </>
+          ) : (
+            <> </>
+          )}
         </Container>
       </>
     );
