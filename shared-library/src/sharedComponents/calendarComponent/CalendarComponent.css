@@ -1,0 +1,37 @@
+.calendarContainer{
+    border: 1px solid black;
+    border-radius:10px;
+    padding: 30px;
+    max-width:450px;
+    padding-left: 45px;
+    background-color: whitesmoke;
+}
+.date{
+    padding:18px;
+    display: flex;
+    justify-content:center;
+    border:1px solid gray;
+    width:52px !important;
+    margin:1px;
+    border-radius: 0px;
+    position: relative;
+    font-size:17px
+}
+.dateFromPrevMonth{
+    padding:18px;
+    display: flex;
+    justify-content:center;
+    border:1px solid gray;
+    width: 52px !important;
+    margin:1px;
+    border-radius: 0px;
+    color:gray;
+}
+.events{
+   position: absolute !important;
+   margin-top: 15px;
+}
+.dateP{
+    position: absolute !important;
+    top: 0;right: 10
+}
