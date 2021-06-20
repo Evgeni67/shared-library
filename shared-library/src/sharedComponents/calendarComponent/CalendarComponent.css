@@ -1,108 +1,137 @@
-.calendarContainer{
-    border: 1px solid black;
-    border-radius:10px;
-    padding: 30px;
-    max-width:450px;
-    padding-left: 45px;
-    background-color: #00FF84;
+.calendarContainer {
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 30px;
+  max-width: 450px;
+  min-width: 440px;
+  padding-left: 45px;
+  background-color: #00ff84;
 }
-.dateToday{
-
-padding:18px;
-    display: flex;
-    justify-content:center;
-    border:0.5px solid #0f0f0f;
-    width:52px !important;
-    margin:1px;
-    border-radius: 3px;
-    position: relative;
-    color: #0f0f0f;
-    font-size:17px;
-    font-weight: 500;
-    background-color: #00FF84;
-    min-width: 52px !important;
-    min-height: 60px;
+.calendarIcon {
+  font-size: 35px;
 }
-.eventDot{
-    font-size:8px;
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently *2017*
+                                    supported by Chrome, Edge, Opera and Firefox */
 }
-.date{
-    padding:18px;
-    display: flex;
-    justify-content:center;
-    border:1px solid gray;
-    width:52px !important;
-    margin:1px;
-    border-radius: 0px;
-    position: relative;
-    color: #00FF84;
-    font-size:17px;
-    font-weight: 500;
-    background-color: #0f0f0f;
-    min-width: 52px !important;
-    min-height: 60px;
-
+.dateToday {
+  padding: 18px;
+  display: flex;
+  justify-content: center;
+  border: 0.5px solid #0f0f0f;
+  width: 52px !important;
+  margin: 1px;
+  border-radius: 3px;
+  position: relative;
+  color: #0f0f0f;
+  font-size: 17px;
+  font-weight: 500;
+  background-color: #00ff84;
+  min-width: 52px !important;
+  min-height: 60px;
 }
-.dateFromPrevMonth{
-    padding:18px;
-    display: flex;
-    justify-content:center;
-    border:1px solid lightgray;
-    min-width: 52px !important;
-    margin:1px;
-    border-radius: 0px;
-    color:rgb(58, 51, 51);
-    background-color:lightgray;
-    font-weight: 500;
-    min-width: 52px !important;
+.eventDot {
+  font-size: 8px;
 }
-.dateFromNextMonth{
-    padding:18px;
-    display: flex;
-    justify-content:center;
-    border:1px solid lightgray;
-    min-width: 52px !important;
-    margin:1px;
-    border-radius: 0px;
-    color:black;
-    background-color:lightgray;
-    font-weight: 500;
+.date {
+  padding: 18px;
+  display: flex;
+  justify-content: center;
+  border: 1px solid gray;
+  width: 52px !important;
+  margin: 1px;
+  border-radius: 0px;
+  position: relative;
+  color: #00ff84;
+  font-size: 17px;
+  font-weight: 500;
+  background-color: #0f0f0f;
+  min-width: 52px !important;
+  min-height: 60px;
 }
-.events{
-   position: absolute !important;
-   margin-top: 15px;
-   
+.date:active {
+  border: 1px solid red;
 }
-.dateP{
-    position: absolute !important;
-    top: 0;right: 10
+.dateFromPrevMonth {
+  padding: 18px;
+  display: flex;
+  justify-content: center;
+  border: 1px solid lightgray;
+  min-width: 52px !important;
+  margin: 1px;
+  border-radius: 0px;
+  color: rgb(58, 51, 51);
+  background-color: lightgray;
+  font-weight: 500;
+  min-width: 52px !important;
 }
-.addDot{
-    border:1px solid black !important;
-    border-radius:10px;
-    margin-right: 5px;
+.dateFromNextMonth {
+  padding: 18px;
+  display: flex;
+  justify-content: center;
+  border: 1px solid lightgray;
+  min-width: 52px !important;
+  margin: 1px;
+  border-radius: 0px;
+  color: black;
+  background-color: lightgray;
+  font-weight: 500;
 }
-.yearMonth{
-    font-size:30px;
+.events {
+  position: absolute !important;
+  margin-top: 15px;
 }
-.calendarText{
-    font-size:35px;
-    margin-bottom: 25px;
+.dateP {
+  position: absolute !important;
+  top: 0;
+  right: 10;
 }
-.monthYearRow{
+.addDot {
+  border: 1px solid black !important;
+  border-radius: 10px;
+  margin-right: 5px;
+}
+.seeNotes{
+    border: 1px solid black !important;
+    border-radius: 10px;
     background-color:#0f0f0f;
-    color:#00FF84;
-    border-radius: 10px 10px 5px 5px;
-    padding-top: 10px;
+    color:#00ff84;
+    padding-bottom: 3.5px;
+    font-weight: 500;
 }
-.arrow{
-    font-size:30px;
-    margin-top: 10px;
+.yearMonth {
+  font-size: 30px;
 }
-.minus{
-    font-size:30px;
-    background-color:#0f0f0f;
-    color:#00FF84;
-    border-radius:50px;
-    
+.calendarText {
+  font-size: 35px;
+  margin-bottom: 25px;
+}
+.monthYearRow {
+  background-color: #0f0f0f;
+  color: #00ff84;
+  border-radius: 10px 10px 5px 5px;
+  padding-top: 10px;
+}
+.arrow {
+  font-size: 30px;
+  margin-top: 10px;
+}
+.minus {
+  margin-top: 13px;
+  font-size: 26px;
+  margin-left: 3.7px;
+}
+.plus {
+  margin-top: 14px;
+  font-size: 23px;
+  margin-right: 1px;
+}
+.redDot {
+  margin: 13px;
+  margin-right: 12px;
 }
