@@ -8,6 +8,7 @@ class App extends Component {
     return (
       <>
         <Container>
+          {/* The calendar component can take a list of events as a prop*/}
           <CalendarComponent
             events={[
               {

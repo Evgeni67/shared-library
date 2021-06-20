@@ -6,12 +6,13 @@ import { ImArrowRight } from "react-icons/im";
 import { ImArrowLeft } from "react-icons/im";
 import { BsFillPlusCircleFill } from "react-icons/bs";
 import { AiFillMinusCircle as HiMinusCircle } from "react-icons/ai";
+
 class CalendarComponent extends Component {
   state = {
     greenEvents: [],
     redEvents: [],
     orangeEvents: [],
-    notes: [],
+    notes: [], // Coming soon
     seeNotes: false,
     isDateSelected: false,
     dateSelected: {},
@@ -43,6 +44,122 @@ class CalendarComponent extends Component {
   selectDate = async (date) => {
     this.setState({ isDateSelected: true });
     this.setState({ dateSelected: date });
+  };
+  componentDidMount = async () => {
+    //load props in state
+    if(this.props.events !== undefined){
+      let greenEventsFromProps1 = this.props.events.filter(
+        (event) => event.type === "green"
+      );
+      let greenEventsFromProps = [];
+  
+      if (greenEventsFromProps1.length > 0) {
+        greenEventsFromProps1.forEach((event) =>
+          greenEventsFromProps.push(event.day)
+        );
+      }
+  
+      let orangeEventsFromProps1 = this.props.events.filter(
+        (event) => event.type === "orange"
+      );
+      let orangeEventsFromProps = [];
+  
+      if (orangeEventsFromProps1.length > 0) {
+        orangeEventsFromProps1.forEach((event) =>
+          orangeEventsFromProps.push(event.day)
+        );
+      }
+  
+      let redEventsFromProps = [];
+      let redEventsFromProps1 = this.props.events.filter(
+        (event) => event.type === "orange"
+      );
+  
+      if (redEventsFromProps1.length > 0) {
+        redEventsFromProps1.forEach((event) =>
+          redEventsFromProps.push(event.day)
+        );
+      }
+  
+      this.setState({ orangeEvents: orangeEventsFromProps });
+      this.setState({ redEvents: redEventsFromProps });
+      this.setState({ greenEvents: greenEventsFromProps });
+    }
+    
+    var today = new Date();
+    this.setState({ currentYear: today.getFullYear() });
+    this.setState({ currentMonth: today.getMonth() });
+
+  
+    this.setState({
+      allDaysInTheMonth: await this.getDaysInMonth(
+        today.getMonth(),
+        today.getFullYear()
+      ),
+    });
+    if (today.getMonth() === 0) {
+      this.setState({
+        allDaysInThePrevMonth: await this.getDaysInMonth(
+          11,
+          today.getFullYear() - 1
+        ),
+      });
+    } else {
+      this.setState({
+        allDaysInThePrevMonth: await this.getDaysInMonth(
+          today.getMonth() - 1,
+          today.getFullYear()
+        ),
+      });
+    }
+    if (today.getMonth() === 11) {
+      this.setState({
+        allDaysInTheNextMonth: await this.getDaysInMonth(
+          0,
+          today.getFullYear() + 1
+        ),
+      });
+    } else {
+      this.setState({
+        allDaysInTheNextMonth: await this.getDaysInMonth(
+          today.getMonth() + 1,
+          today.getFullYear()
+        ),
+      });
+    }
+
+    const firstDay = this.state.allDaysInTheMonth.filter(
+      (day) => new Date(day.day).getDate() === 1
+    );
+    if (new Date(firstDay[0].day).getDay() === 1) {
+      this.setState({ startArrayLenght: 0 });
+    } else if (new Date(firstDay[0].day).getDay() === 2) {
+      this.setState({ startArrayLenght: 1 });
+    } else if (new Date(firstDay[0].day).getDay() === 3) {
+      this.setState({ startArrayLenght: 2 });
+    } else if (new Date(firstDay[0].day).getDay() === 4) {
+      this.setState({ startArrayLenght: 3 });
+    } else if (new Date(firstDay[0].day).getDay() === 5) {
+      this.setState({ startArrayLenght: 4 });
+    } else if (new Date(firstDay[0].day).getDay() === 6) {
+      this.setState({ startArrayLenght: 5 });
+    } else if (new Date(firstDay[0].day).getDay() === 0) {
+      this.setState({ startArrayLenght: 6 });
+    }
+    const prevMonthLength = this.state.allDaysInThePrevMonth.length;
+    this.setState({
+      allDaysInThePrevMonth: this.state.allDaysInThePrevMonth.slice(
+        prevMonthLength - this.state.startArrayLenght,
+        prevMonthLength
+      ),
+    });
+    this.setState({ firstDay: new Date(firstDay[0].day).getDay() }); // This number represents the day that the month starts at
+    this.setState({
+      endArrayLenght:
+        42 -
+        (this.state.allDaysInTheMonth.length + this.state.startArrayLenght),
+    });
+    this.setState({ readyToRender: true });
   };
   updateCurrentMonth = async (index) => {
     this.setState({ currentMonth: this.state.currentMonth + index }, () => {});
@@ -236,125 +353,7 @@ class CalendarComponent extends Component {
       this.setState({ greenEvents: greenEventsNew });
     }
   };
-  componentDidMount = async () => {
-    console.log("->",this.props.events);
-    //we pass the incoming data for the events in our state so we can visualize it
-    let greenEventsFromProps1 = this.props.events.filter(
-      (event) => event.type === "green"
-    );
-    console.log(greenEventsFromProps1)
-    let greenEventsFromProps = [];
-
-    if (greenEventsFromProps1.length > 0) {
-      greenEventsFromProps1.forEach((event) =>
-        greenEventsFromProps.push(event.day)
-      );
-    }
-
-    let orangeEventsFromProps1 = this.props.events.filter(
-      (event) => event.type === "orange"
-    );
-    let orangeEventsFromProps = [];
-
-    if (orangeEventsFromProps1.length > 0) {
-      orangeEventsFromProps1.forEach((event) =>
-        orangeEventsFromProps.push(event.day)
-      );
-    }
-
-    let redEventsFromProps = [];
-    let redEventsFromProps1 = this.props.events.filter(
-      (event) => event.type === "orange"
-    );
-
-    if (redEventsFromProps1.length > 0) {
-      redEventsFromProps1.forEach((event) =>
-        redEventsFromProps.push(event.day)
-      );
-    }
-
-    this.setState({ orangeEvents: orangeEventsFromProps });
-    this.setState({ redEvents: redEventsFromProps });
-    this.setState({ greenEvents: greenEventsFromProps });
-    //Getting the current year and month
-    var today = new Date();
-    this.setState({ currentYear: today.getFullYear() });
-    this.setState({ currentMonth: today.getMonth() });
-
-    // React does not guarantee that the state changes are
-    // applied immediately so we pass the props to getDaysInMonth like this
-
-    this.setState({
-      allDaysInTheMonth: await this.getDaysInMonth(
-        today.getMonth(),
-        today.getFullYear()
-      ),
-    });
-    if (today.getMonth() === 0) {
-      this.setState({
-        allDaysInThePrevMonth: await this.getDaysInMonth(
-          11,
-          today.getFullYear() - 1
-        ),
-      });
-    } else {
-      this.setState({
-        allDaysInThePrevMonth: await this.getDaysInMonth(
-          today.getMonth() - 1,
-          today.getFullYear()
-        ),
-      });
-    }
-    if (today.getMonth() === 11) {
-      this.setState({
-        allDaysInTheNextMonth: await this.getDaysInMonth(
-          0,
-          today.getFullYear() + 1
-        ),
-      });
-    } else {
-      this.setState({
-        allDaysInTheNextMonth: await this.getDaysInMonth(
-          today.getMonth() + 1,
-          today.getFullYear()
-        ),
-      });
-    }
-
-    // Get the day that the month starts from
-    const firstDay = this.state.allDaysInTheMonth.filter(
-      (day) => new Date(day.day).getDate() === 1
-    );
-    if (new Date(firstDay[0].day).getDay() === 1) {
-      this.setState({ startArrayLenght: 0 });
-    } else if (new Date(firstDay[0].day).getDay() === 2) {
-      this.setState({ startArrayLenght: 1 });
-    } else if (new Date(firstDay[0].day).getDay() === 3) {
-      this.setState({ startArrayLenght: 2 });
-    } else if (new Date(firstDay[0].day).getDay() === 4) {
-      this.setState({ startArrayLenght: 3 });
-    } else if (new Date(firstDay[0].day).getDay() === 5) {
-      this.setState({ startArrayLenght: 4 });
-    } else if (new Date(firstDay[0].day).getDay() === 6) {
-      this.setState({ startArrayLenght: 5 });
-    } else if (new Date(firstDay[0].day).getDay() === 0) {
-      this.setState({ startArrayLenght: 6 });
-    }
-    const prevMonthLength = this.state.allDaysInThePrevMonth.length;
-    this.setState({
-      allDaysInThePrevMonth: this.state.allDaysInThePrevMonth.slice(
-        prevMonthLength - this.state.startArrayLenght,
-        prevMonthLength
-      ),
-    });
-    this.setState({ firstDay: new Date(firstDay[0].day).getDay() }); // This number represents the day that the month starts at
-    this.setState({
-      endArrayLenght:
-        42 -
-        (this.state.allDaysInTheMonth.length + this.state.startArrayLenght),
-    });
-    this.setState({ readyToRender: true });
-  };
+ 
   getDaysInMonth = async (month, year) => {
     // get the first day of the month
     var date = new Date(year, month, 1);
